@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^', include('main.urls')),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
     # Examples:
     # url(r'^$', 'twitter.views.home', name='home'),
     # url(r'^twitter/', include('twitter.foo.urls')),

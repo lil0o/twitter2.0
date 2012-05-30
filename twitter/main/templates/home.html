@@ -1,17 +1,18 @@
 <html>
 <head>
-	<title></title>
+	<title>Home</title>
 </head>
 <body>
 	<div>
-		<big>@{{ user.user.username }}</big>
+	    <big>@ {{ profile.user.username }}</big>
+	    <br>
+			<small>{{ profile.biography }}</small>
 		<br>
-			{{ user.name }}
-		<br>
-			<small>{{ user.bio }}</small>
-		<br>
-			<small>{{ user.location }}</small>
-		<br>
+			<small>{{ profile.location }}</small>
 	</div>
+	<div id="content">
+		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
+	</div>
+
 </body>
 </html>

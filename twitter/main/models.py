@@ -13,6 +13,14 @@ class Profile(models.Model):
         return self.user.username
 
 
+def get_profile(user):
+    if not hasattr(user, '_profile_cache'):
+        profile, created = Profile.objects.get_or_create(user=user)
+        user._profile_cache = profile
+    return user._profile_cache
+User.get_profile = get_profile
+
+
 class Tweet(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(Profile)
