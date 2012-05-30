@@ -6,12 +6,14 @@
 	<div>
 	    <big>@ {{ profile.user.username }}</big>
 	    <br>
-			<small>{{ profile.biography }}</small>
+		<small>{{ profile.biography }}</small>
 		<br>
-			<small>{{ profile.location }}</small>
+		<small>{{ profile.location }}</small>
 	</div>
-	<div id="content">
+	<div>
 		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
+		<br>
+		<a href="{% url edit_profile %}">Edit Your Profile</a>
 	</div>
 
 </body>

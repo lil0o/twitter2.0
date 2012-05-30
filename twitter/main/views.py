@@ -1,7 +1,7 @@
 # -.- coding:utf8 -.-
 from main.models import Profile
 from django.contrib.auth.models import User
-from main.forms import UserForm, Log_inForm
+from main.forms import UserForm, Log_inForm, Edit_ProfileForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
@@ -58,3 +58,16 @@ def home(request):
     return render_to_response('home.html', {
         'profile': profile
         }, RequestContext(request))
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = Edit_ProfileForm(request.POST, instance=Profile.objects.get(user=request.user))
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        else:
+            return render_to_response('sign_up.html', {'form': form, }, RequestContext(request))
+    form = Edit_ProfileForm(instance=Profile.objects.get(user=request.user))
+    return render_to_response('edit_profile.html', {'form': form, }, RequestContext(request))
