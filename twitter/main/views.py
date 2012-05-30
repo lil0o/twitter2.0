@@ -1,7 +1,7 @@
 # -.- coding:utf8 -.-
 from main.models import Profile
 from django.contrib.auth.models import User
-from main.forms import UserCreateForm, LoginForm
+from main.forms import UserForm, Log_inForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
@@ -14,9 +14,9 @@ def index(request):
 
 
 def sign_up(request):
-    form = UserCreateForm
+    form = UserForm
     if request.method == 'POST':
-        form = UserCreateForm(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid():
             user = form.save()
             Profile.objects.create(user=user)
@@ -27,7 +27,7 @@ def sign_up(request):
 
 def log_in(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = Log_inForm(request.POST)
         if form.is_valid():
                 username = form.cleaned_data['username']
                 password = form.cleaned_data['password']
@@ -46,7 +46,7 @@ def log_in(request):
                         pass
         return render_to_response('index.html', {'form': form}, context_instance=RequestContext(request))
     else:
-        form = LoginForm()
+        form = Log_inForm()
         dic = {'form': form}
         dic.update(csrf(request))
         return render_to_response('log_in.html', dic)
