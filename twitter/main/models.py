@@ -25,4 +25,3 @@ class Tweet(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(Profile)
     status = models.CharField(max_length=140)
-    public = models.BooleanField()

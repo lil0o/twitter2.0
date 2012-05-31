@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from main.models import Profile
+from main.models import Profile, Tweet
 
 
 class UserForm(UserCreationForm):
@@ -27,3 +27,9 @@ class Edit_ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user',)
+
+
+class TweetForm(forms.ModelForm):
+    class Meta:
+        model = Tweet
+        exclude = ('owner',)

@@ -1,7 +1,7 @@
 # -.- coding:utf8 -.-
-from main.models import Profile
+from main.models import Profile, Tweet
 from django.contrib.auth.models import User
-from main.forms import UserForm, Log_inForm, Edit_ProfileForm
+from main.forms import UserForm, Log_inForm, Edit_ProfileForm, TweetForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
@@ -70,4 +70,17 @@ def edit_profile(request):
         else:
             return render_to_response('sign_up.html', {'form': form, }, RequestContext(request))
     form = Edit_ProfileForm(instance=Profile.objects.get(user=request.user))
-    return render_to_response('edit_profile.html', {'form': form, }, RequestContext(request))
+    return render_to_response('edit_profile.html',
+        {'form': form, }, RequestContext(request))
+
+
+def post_tweet(request):
+    form = TweetForm()
+    if request.method == 'POST':
+        form = TweetForm(request.POST)
+        if form.is_valid():
+            status = form.cleaned_data['status']
+            owner = Profile.objects.get(user=request.user)
+            Tweet.objects.create(owner=owner, status=status)
+            return redirect('home')
+    return render_to_response('post_tweet.html', {'form': form, }, RequestContext(request))
