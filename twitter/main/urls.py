@@ -9,4 +9,5 @@ urlpatterns = patterns('main.views',
     url(r'^profile/edit/$', 'edit_profile', name='edit_profile'),
     url(r'^tweet/post/$', 'post_tweet', name='post_tweet'),
     url(r'^tweet/(?P<pk>\d+)/edit/$', 'edit_tweet', name='edit_tweet'),
+    url(r'^tweet/(?P<pk>\d+)/delete/$', 'delete_tweet', name='delete_tweet'),
 )

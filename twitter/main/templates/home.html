@@ -17,7 +17,8 @@
 			<br>
 			{{ tweet.status }}
 			<br>
-			<a href="{% url edit_tweet tweet.pk%}"> Edit </a>
+			<a href="{% url edit_tweet tweet.pk%}"> Edit    </a>
+			<a href="{% url delete_tweet tweet.pk%}"> Delete </a>
 		</div>
 		{% endfor %}
 	</div>

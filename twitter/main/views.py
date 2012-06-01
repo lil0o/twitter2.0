@@ -99,3 +99,9 @@ def edit_tweet(request, pk):
     return render_to_response('post_tweet.html', {
         'form': form,
         }, RequestContext(request))
+
+
+@login_required
+def delete_tweet(request, pk):
+    Tweet.objects.filter(pk=pk).delete()
+    return redirect('home')
