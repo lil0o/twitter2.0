@@ -16,6 +16,8 @@
 			@{{ tweet.owner }} {{ tweet.creation_date }}		
 			<br>
 			{{ tweet.status }}
+			<br>
+			<a href="{% url edit_tweet tweet.pk%}"> Edit </a>
 		</div>
 		{% endfor %}
 	</div>

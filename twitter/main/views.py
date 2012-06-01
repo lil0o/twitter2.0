@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from main.forms import UserForm, Log_inForm, Edit_ProfileForm, TweetForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.context_processors import csrf
 from django.template import RequestContext
 
@@ -74,6 +74,7 @@ def edit_profile(request):
         {'form': form, }, RequestContext(request))
 
 
+@login_required
 def post_tweet(request):
     form = TweetForm()
     if request.method == 'POST':
@@ -84,3 +85,17 @@ def post_tweet(request):
             Tweet.objects.create(owner=owner, status=status)
             return redirect('home')
     return render_to_response('post_tweet.html', {'form': form, }, RequestContext(request))
+
+
+@login_required
+def edit_tweet(request, pk):
+    tweet = get_object_or_404(Tweet, pk=pk)
+    form = TweetForm(instance=tweet)
+    if request.method == 'POST':
+        form = TweetForm(request.POST, instance=tweet)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    return render_to_response('post_tweet.html', {
+        'form': form,
+        }, RequestContext(request))
