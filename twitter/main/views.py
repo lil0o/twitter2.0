@@ -55,9 +55,9 @@ def log_in(request):
 @login_required
 def home(request):
     profile = request.user.get_profile()
-    return render_to_response('home.html', {
-        'profile': profile
-        }, RequestContext(request))
+    tweet = Tweet.objects.filter(owner=profile.pk)
+    return render_to_response('home.html', {'profile': profile, 'tweet': tweet},
+        RequestContext(request))
 
 
 @login_required

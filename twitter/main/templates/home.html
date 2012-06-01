@@ -11,9 +11,20 @@
 		<small>{{ profile.location }}</small>
 	</div>
 	<div>
+		{% for tweet in tweet %}
+		<div>		
+			@{{ tweet.owner }} {{ tweet.creation_date }}		
+			<br>
+			{{ tweet.status }}
+		</div>
+		{% endfor %}
+	</div>
+	<div>
 		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
 		<br>
 		<a href="{% url edit_profile %}">Edit Your Profile</a>
+		<br>
+		<a href="{% url post_tweet %}">Post A Tweet</a>		
 	</div>
 
 </body>
