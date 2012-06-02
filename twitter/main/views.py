@@ -55,8 +55,11 @@ def log_in(request):
 @login_required
 def home(request):
     profile = request.user.get_profile()
-    tweet = Tweet.objects.filter(owner=profile.pk)
-    return render_to_response('home.html', {'profile': profile, 'tweet': tweet},
+    followin = profile.follow.all()
+    tweets = Tweet.objects.filter(owner__id__in=followin) | Tweet.objects.filter(owner=profile.pk)
+    return render_to_response('home.html', {
+        'profile': profile, 
+        'tweet': tweets},
         RequestContext(request))
 
 
@@ -105,3 +108,35 @@ def edit_tweet(request, pk):
 def delete_tweet(request, pk):
     Tweet.objects.filter(pk=pk).delete()
     return redirect('home')
+
+
+@login_required
+def show_profile(request, pk):
+    profile = Profile.objects.get(pk=pk)
+    tweets = Tweet.objects.filter(owner=profile)
+    try:
+        Profile.objects.get(user=request.user, follow=profile)
+        textbutton = "unfollow"
+    except Profile.DoesNotExist:
+        textbutton = "follow"
+    return render_to_response('show_profile.html', {
+        'profile': profile,
+        'tweets': tweets,
+        'profilelogin': request.user,
+        'textbutton': textbutton,
+    }, RequestContext(request))
+        
+@login_required
+def follow(request):
+    pk = request.POST['pk']
+    profile = Profile.objects.get(pk=pk)
+    profilelogin = Profile.objects.get(user=request.user)
+    try:
+        Profile.objects.get(user=request.user, follow=profile)
+        profilelogin.follow.remove(profile)
+    except Profile.DoesNotExist:
+        profilelogin.follow.add(profile)
+    return redirect('show_profile', pk)     
+
+
+

@@ -12,13 +12,16 @@
 	</div>
 	<div>
 		{% for tweet in tweet %}
-		<div>		
-			@{{ tweet.owner }} {{ tweet.creation_date }}		
+		<div>
+		<a href="{% url show_profile tweet.owner.id %}">		
+			@{{ tweet.owner }}</a> {{ tweet.creation_date }}		
 			<br>
 			{{ tweet.status }}
 			<br>
+			{% if tweet.owner == profile %}
 			<a href="{% url edit_tweet tweet.pk%}"> Edit    </a>
 			<a href="{% url delete_tweet tweet.pk%}"> Delete </a>
+			{% endif %}
 		</div>
 		{% endfor %}
 	</div>

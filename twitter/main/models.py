@@ -8,6 +8,7 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True)
     location = models.CharField(max_length=75, blank=True)
     biography = models.CharField(max_length=250, blank=True)
+    follow = models.ManyToManyField('self', blank=True, symmetrical=False)
 
     def __unicode__(self):
         return self.user.username
