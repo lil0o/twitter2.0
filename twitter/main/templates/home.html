@@ -4,24 +4,24 @@
 </head>
 <body>
 	<div>
-	    <big>@ {{ profile.user.username }}</big>
-	    <br>
-		<small>{{ profile.biography }}</small>
-		<br>
-		<small>{{ profile.location }}</small>
+		<div>
+		    <big>@ {{ profile.user.username }}</big>
+		    <br>
+			<small>{{ profile.biography }}</small>
+			<br>
+			<small>{{ profile.location }}</small>
+		</div>
+
 	</div>
 	<div>
 		{% for tweet in tweet %}
 		<div>
-		<a href="{% url show_profile tweet.owner.id %}">		
-			@{{ tweet.owner }}</a> {{ tweet.creation_date }}		
+			@{{ tweet.owner }}{{ tweet.creation_date }}		
 			<br>
 			{{ tweet.status }}
 			<br>
-			{% if tweet.owner == profile %}
-			<a href="{% url edit_tweet tweet.pk%}"> Edit    </a>
-			<a href="{% url delete_tweet tweet.pk%}"> Delete </a>
-			{% endif %}
+			<a href="{% url edit_tweet tweet.pk%}"> Edit 	</a>
+			<a href="{% url delete_tweet tweet.pk%}"> Delete </a>		
 		</div>
 		{% endfor %}
 	</div>
@@ -32,6 +32,15 @@
 		<br>
 		<a href="{% url post_tweet %}">Post A Tweet</a>		
 	</div>
-
+	<div>
+		{% for users in users %}
+		<div>
+			{{ users.user }}
+			<br>
+			<small><a href="{% url follow users.pk %}"> {{ action }} </a></small>
+			<small><a href="{% url visit_profile users.pk %}"> Visit Profile </a></small>
+		</div>
+		{% endfor %}
+	</div>
 </body>
 </html>

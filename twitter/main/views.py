@@ -5,7 +5,6 @@ from main.forms import UserForm, Log_inForm, Edit_ProfileForm, TweetForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect, get_object_or_404
-from django.core.context_processors import csrf
 from django.template import RequestContext
 
 
@@ -21,7 +20,8 @@ def sign_up(request):
             user = form.save()
             Profile.objects.create(user=user)
             return redirect('log_in')
-    return render_to_response('sign_up.html', {'form': form, },
+    return render_to_response('sign_up.html', {
+        'form': form, },
         RequestContext(request))
 
 
@@ -44,22 +44,31 @@ def log_in(request):
                             return redirect('home')
                     except:
                         pass
-        return render_to_response('index.html', {'form': form}, context_instance=RequestContext(request))
+        return render_to_response('index.html', {
+            'form': form},
+            context_instance=RequestContext(request))
     else:
         form = Log_inForm()
-        dic = {'form': form}
-        dic.update(csrf(request))
-        return render_to_response('log_in.html', dic)
+        return render_to_response('log_in.html', {
+            'form': form, },
+            RequestContext(request))
 
 
 @login_required
 def home(request):
     profile = request.user.get_profile()
-    followin = profile.follow.all()
-    tweets = Tweet.objects.filter(owner__id__in=followin) | Tweet.objects.filter(owner=profile.pk)
+    tweet = Tweet.objects.filter(owner=profile.pk)
+    users = Profile.objects.exclude(pk=profile.pk)
+    try:
+        Profile.objects.get(user=request.user, follow=users)
+        action = "unfollow"
+    except Profile.DoesNotExist:
+        action = "follow"
     return render_to_response('home.html', {
-        'profile': profile, 
-        'tweet': tweets},
+        'profile': profile,
+        'tweet': tweet,
+        'users': users,
+        'action': action, },
         RequestContext(request))
 
 
@@ -71,10 +80,13 @@ def edit_profile(request):
             form.save()
             return redirect('home')
         else:
-            return render_to_response('sign_up.html', {'form': form, }, RequestContext(request))
+            return render_to_response('sign_up.html', {
+                'form': form, },
+                RequestContext(request))
     form = Edit_ProfileForm(instance=Profile.objects.get(user=request.user))
-    return render_to_response('edit_profile.html',
-        {'form': form, }, RequestContext(request))
+    return render_to_response('edit_profile.html', {
+        'form': form, },
+        RequestContext(request))
 
 
 @login_required
@@ -87,7 +99,9 @@ def post_tweet(request):
             owner = Profile.objects.get(user=request.user)
             Tweet.objects.create(owner=owner, status=status)
             return redirect('home')
-    return render_to_response('post_tweet.html', {'form': form, }, RequestContext(request))
+    return render_to_response('post_tweet.html', {
+        'form': form, },
+        RequestContext(request))
 
 
 @login_required
@@ -111,32 +125,31 @@ def delete_tweet(request, pk):
 
 
 @login_required
-def show_profile(request, pk):
-    profile = Profile.objects.get(pk=pk)
-    tweets = Tweet.objects.filter(owner=profile)
+def follow(request, pk):
+    followed = Profile.objects.get(pk=pk)
+    follower = Profile.objects.get(user=request.user)
     try:
-        Profile.objects.get(user=request.user, follow=profile)
-        textbutton = "unfollow"
+        Profile.objects.get(user=request.user, follow=followed)
+        follower.follow.remove(followed)
     except Profile.DoesNotExist:
-        textbutton = "follow"
-    return render_to_response('show_profile.html', {
-        'profile': profile,
-        'tweets': tweets,
-        'profilelogin': request.user,
-        'textbutton': textbutton,
-    }, RequestContext(request))
-        
+        follower.follow.add(followed)
+    return redirect('home')
+
+
 @login_required
-def follow(request):
-    pk = request.POST['pk']
+def visit_profile(request, pk):
     profile = Profile.objects.get(pk=pk)
-    profilelogin = Profile.objects.get(user=request.user)
-    try:
-        Profile.objects.get(user=request.user, follow=profile)
-        profilelogin.follow.remove(profile)
-    except Profile.DoesNotExist:
-        profilelogin.follow.add(profile)
-    return redirect('show_profile', pk)     
-
-
-
+    tweet = Tweet.objects.filter(owner=pk)
+    if profile.is_public:
+        public = "true"
+    else:
+        try:
+            Profile.objects.get(user=request.user, follow=profile)
+            public = "true"
+        except Profile.DoesNotExist:
+            public = "false"
+    return render_to_response('visit_profile.html', {
+        'profile': profile,
+        'tweet': tweet,
+        'public': public, },
+        RequestContext(request))

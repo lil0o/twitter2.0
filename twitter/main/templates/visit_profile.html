@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Profile</title>
+</head>
+<body>
+	<div>
+		<big>@ {{ profile.username }}</big>
+		<br>
+		<small>{{ profile.biography }}</small>
+		<br>
+		<small>{{ profile.location }}</small>
+	</div>
+
+	<div>
+		{% if public == "false" %}
+			<big> This profile is not public</big>
+  		{% endif %}
+		{% if public == "true" %}
+			{% for tweet in tweet %}
+				{{ tweet.owner }} <small>{{ tweet.creation_date }}</small>
+				<br>
+				{{ tweet.status }}
+			{% endfor %}	
+  		{% endif %}
+	</div>
+</body>
+</html>

@@ -26,7 +26,7 @@ class Log_inForm(forms.Form):
 class Edit_ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user',)
+        exclude = ('user', 'follow',)
 
 
 class TweetForm(forms.ModelForm):

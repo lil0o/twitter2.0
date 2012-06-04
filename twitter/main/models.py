@@ -9,6 +9,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=75, blank=True)
     biography = models.CharField(max_length=250, blank=True)
     follow = models.ManyToManyField('self', blank=True, symmetrical=False)
+    is_public = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.user.username
@@ -26,3 +27,6 @@ class Tweet(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(Profile)
     status = models.CharField(max_length=140)
+
+    class Meta:
+        ordering = ['-creation_date']
