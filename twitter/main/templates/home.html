@@ -1,6 +1,8 @@
 <html>
 <head>
 	<title>Home</title>
+	
+	<link rel ="stylesheet" type="text/css" href="{{STATIC_URL}}style.css">	
 </head>
 <body>
 
@@ -18,9 +20,11 @@
 	<div>		
 		<big>@ {{ profile.user.username }}</big>
 		<br>
-		<small>{{ profile.biography }}</small>
+		<img id="headShot" src="{{ MEDIA_URL }}{{ profile.head_shot }}"/>
 		<br>
 		<small>{{ profile.location }}</small>	
+		<br>
+		<small>{{ profile.biography }}</small>
 		<br>	
 	</div>
 
