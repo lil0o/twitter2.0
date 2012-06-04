@@ -4,7 +4,9 @@
 </head>
 <body>
 	<div>
-		<big>@ {{ profile.username }}</big>
+		<big>@ {{ profile.user.username }}</big>
+		<br>
+		<a href="{% url follow profile.pk %}">{{ action }}</a>
 		<br>
 		<small>{{ profile.biography }}</small>
 		<br>
@@ -20,6 +22,7 @@
 				{{ tweet.owner }} <small>{{ tweet.creation_date }}</small>
 				<br>
 				{{ tweet.status }}
+				<br>
 			{% endfor %}	
   		{% endif %}
 	</div>

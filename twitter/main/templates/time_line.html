@@ -1,0 +1,16 @@
+<html>
+<head>
+	<title>Time Line</title>
+</head>
+<body>
+	{% for tweet in tweet %}
+	<div>
+		@{{ tweet.owner }}{{ tweet.creation_date }}		
+		<br>
+		{{ tweet.status }}		
+		<br>	
+	</div>
+	{% endfor %}
+
+</body>
+</html>

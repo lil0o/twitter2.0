@@ -12,4 +12,5 @@ urlpatterns = patterns('main.views',
     url(r'^tweet/(?P<pk>\d+)/delete/$', 'delete_tweet', name='delete_tweet'),
     url(r'^follow/(?P<pk>\d+)/$', 'follow', name='follow'),
     url(r'^profile/(?P<pk>\d+)/$', 'visit_profile', name='visit_profile'),
+    url(r'^timeline$', 'time_line', name='time_line'),
 )

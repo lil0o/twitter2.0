@@ -58,17 +58,11 @@ def log_in(request):
 def home(request):
     profile = request.user.get_profile()
     tweet = Tweet.objects.filter(owner=profile.pk)
-    users = Profile.objects.exclude(pk=profile.pk)
-    try:
-        Profile.objects.get(user=request.user, follow=users)
-        action = "unfollow"
-    except Profile.DoesNotExist:
-        action = "follow"
+    users = Profile.objects.all().exclude(pk=profile.pk)
     return render_to_response('home.html', {
         'profile': profile,
         'tweet': tweet,
-        'users': users,
-        'action': action, },
+        'users': users, },
         RequestContext(request))
 
 
@@ -133,23 +127,37 @@ def follow(request, pk):
         follower.follow.remove(followed)
     except Profile.DoesNotExist:
         follower.follow.add(followed)
-    return redirect('home')
+    return redirect('visit_profile', pk)
 
 
 @login_required
 def visit_profile(request, pk):
     profile = Profile.objects.get(pk=pk)
     tweet = Tweet.objects.filter(owner=pk)
-    if profile.is_public:
+    try:
+        Profile.objects.get(user=request.user, follow=profile)
+        action = "unfollow"
         public = "true"
-    else:
-        try:
-            Profile.objects.get(user=request.user, follow=profile)
+    except Profile.DoesNotExist:
+        if profile.is_public:
             public = "true"
-        except Profile.DoesNotExist:
+            action = "follow"
+        else:
             public = "false"
+            action = "follow"
     return render_to_response('visit_profile.html', {
         'profile': profile,
         'tweet': tweet,
-        'public': public, },
+        'public': public,
+        'action': action, },
+        RequestContext(request))
+
+
+@login_required
+def time_line(request):
+    profile = request.user.get_profile()
+    following = profile.follow.all()
+    tweet = Tweet.objects.filter(owner__id__in=following)
+    return render_to_response('time_line.html', {
+        'tweet': tweet},
         RequestContext(request))

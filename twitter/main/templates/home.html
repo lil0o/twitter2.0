@@ -3,42 +3,51 @@
 	<title>Home</title>
 </head>
 <body>
-	<div>
-		<div>
-		    <big>@ {{ profile.user.username }}</big>
-		    <br>
-			<small>{{ profile.biography }}</small>
-			<br>
-			<small>{{ profile.location }}</small>
-		</div>
 
+	
+	<div>		
+		<a href="{% url edit_profile %}">Edit Your Profile</a>
+		<br>		
+		<a href="{% url time_line %}">Time Line</a>	
+		<br>
+		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
+		<br>	
 	</div>
+
+
+	<div>		
+		<big>@ {{ profile.user.username }}</big>
+		<br>
+		<small>{{ profile.biography }}</small>
+		<br>
+		<small>{{ profile.location }}</small>	
+		<br>	
+	</div>
+
+
 	<div>
+		<a href="{% url post_tweet %}">Post A Tweet</a>	
+		<br>
 		{% for tweet in tweet %}
 		<div>
 			@{{ tweet.owner }}{{ tweet.creation_date }}		
 			<br>
 			{{ tweet.status }}
-			<br>
+			<br>			
 			<a href="{% url edit_tweet tweet.pk%}"> Edit 	</a>
 			<a href="{% url delete_tweet tweet.pk%}"> Delete </a>		
+			<br>	
 		</div>
 		{% endfor %}
 	</div>
-	<div>
-		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
-		<br>
-		<a href="{% url edit_profile %}">Edit Your Profile</a>
-		<br>
-		<a href="{% url post_tweet %}">Post A Tweet</a>		
-	</div>
+
+	
+
 	<div>
 		{% for users in users %}
 		<div>
-			{{ users.user }}
-			<br>
-			<small><a href="{% url follow users.pk %}"> {{ action }} </a></small>
-			<small><a href="{% url visit_profile users.pk %}"> Visit Profile </a></small>
+			<br>			
+			<a href="{% url visit_profile users.pk %}">{{ users.user }}</a>		
 		</div>
 		{% endfor %}
 	</div>
