@@ -1,7 +1,57 @@
 #shot {
-	width: 160px; height:160px;
+	width: 120px; height:120px;
 }
 
 #minishot {
-	width: 60px; height:60px;
+	width: 45px; height:45px;
 }
+
+#header {
+	height: 130px;
+	background: white;
+	margin: 0 auto;
+	width: 900px;	
+	border-radius: 50px 50px / 50px 50px;
+	border-style:none none solid none;
+	border-color:#E1E4FF;
+}
+
+#menu {
+	height: 60px;
+	background: white;
+	margin: 0 auto;
+	width: 900px;	
+	border-style:none;
+}
+
+#body{
+	background: white;
+	margin: 0 auto;
+	width: 900px;	
+	border-radius: 50px 50px / 50px 50px;
+	border-style:solid none none none;
+	border-color:#E1E4FF;
+}
+
+#left{position: absolute; 
+	background: white; 
+	width: 29%; 
+	margin: 5px 0 0 2.5px; 
+	padding: 1px;
+} 
+
+#right{position: absolute; 
+	left: 70%; 
+	background: white; 
+	width: 29%; 
+	margin: 5px 0 0 2.5px; 
+	padding: 1px;
+} 
+
+#content{position: absolute; 
+		left: 30%; 
+		width: 40%; 
+		font: 16px Verdana, Helvetica, Arial, sans-serif; 
+		background: white; 
+		margin-bottom: 2px;
+	} 

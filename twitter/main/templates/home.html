@@ -4,22 +4,27 @@
 	<link rel ="stylesheet" type="text/css" href="{{STATIC_URL}}style.css">	
 </head>
 <body>
-
-	
-	<div>		
-		<a href="{% url edit_profile %}">Edit Your Profile</a>
-		<br>		
-		<a href="{% url time_line %}">Time Line</a>	
-		<br>
-		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
-		<br>	
+	<div id="header">
+		<a href="{% url home %}"><img src="{{MEDIA_URL}}HeadShots/logo.png" width="125" height="100" alt="TwitterDjango"/></a>
 	</div>
 
+	<div id="menu">
+		<a href="{% url edit_profile %}">
+			<img src="{{MEDIA_URL}}HeadShots/profiler.jpg" width="40" height="40" alt="EditProfile"/>
+		</a>
+		<a href="{% url time_line %}">
+			<img src="{{MEDIA_URL}}HeadShots/timeliner.jpg" width="40" height="40" alt="TimeLine"/>
+		</a>	
+		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
+	</div>
 
-	<div>		
+	<div id="body">
+	<div id="left">		
 		<big>@ {{ profile.user.username }}</big>
 		<br>
 		<img id="shot" src="{{ MEDIA_URL }}{{ profile.head_shot }}"/>
+		<br>
+		<a href="{% url post_tweet %}">Post A Tweet</a>	
 		<br>
 		<small>{{ profile.location }}</small>	
 		<br>
@@ -27,12 +32,13 @@
 		<br>	
 	</div>
 
-
-	<div>
-		<a href="{% url post_tweet %}">Post A Tweet</a>	
+	<div id="content">
+		<big>.::My Tweets::.</big>
 		<br>
+		<br>		
 		{% for tweet in tweet %}
 		<div>
+			<img id="minishot" src="{{ MEDIA_URL }}{{ tweet.owner.head_shot }}"/>
 			@{{ tweet.owner }}{{ tweet.creation_date }}		
 			<br>
 			{{ tweet.status }}
@@ -44,17 +50,15 @@
 		{% endfor %}
 	</div>
 
-	
-
-	<div>
+	<div id="right">
 		{% for users in users %}
 		<div>
 			<br>
-			<img id="minishot" src="{{ MEDIA_URL }}{{ users.head_shot }}"/>
-			<br>			
+			<img id="minishot" src="{{ MEDIA_URL }}{{ users.head_shot }}"/>			
 			<a href="{% url visit_profile users.pk %}">{{ users.user }}</a>		
 		</div>
 		{% endfor %}
+	</div>
 	</div>
 </body>
 </html>

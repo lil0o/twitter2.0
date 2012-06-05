@@ -4,19 +4,44 @@
 	<link rel ="stylesheet" type="text/css" href="{{STATIC_URL}}style.css">
 </head>
 <body>
-	<div>
-	{% for tweet in tweet %}
+
+	<div id="header">
+		<a href="{% url home %}"><img src="{{MEDIA_URL}}HeadShots/logo.png" width="125" height="100" alt="TwitterDjango"/></a>
+	</div>
+
+	<div id="menu">
+		<a href="{% url edit_profile %}">
+			<img src="{{MEDIA_URL}}HeadShots/profiler.jpg" width="40" height="40" alt="EditProfile"/>
+		</a>
+		<a href="{% url time_line %}">
+			<img src="{{MEDIA_URL}}HeadShots/timeliner.jpg" width="40" height="40" alt="TimeLine"/>
+		</a>	
+		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
+	</div>
+
+	<div id="body">
+		<div id="left">		
+				
+		</div>
+
+		<div id="content">
+			.::My Friend's Tweets::.
+		   {% for tweet in tweet %}
 			<div>
 				<br>
 					<img id="minishot" src="{{ MEDIA_URL }}{{ tweet.owner.head_shot }}"/>
-				<br>
-				<br>
 				@{{ tweet.owner }}<small>{{ tweet.creation_date }}</small>		
 				<br>
 				{{ tweet.status }}		
 				<br>	
 			</div>
-	{% endfor %}
+			{% endfor %}		
+		</div>
+
+		<div id="right">
+			
+		</div>
 	</div>
+
 </body>
 </html>

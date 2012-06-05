@@ -1,14 +1,38 @@
 <html>
 <head>
 	<title>Twitter</title>
+	<link rel ="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
-	<div id="bo"><a href="{% url log_in %}">Log In</a></div>
-	<div id="content">
-		<a href="{% url sign_up %}">Sign Up</a>
-		<br>
-		<a href="{% url django.contrib.auth.views.password_reset %}">Forgot your password? </a>	
+	<div id="header">
+		<a href="http://127.0.0.1:8000/"><img src="static/logo.png" width="125" 
+			height="100" alt="TwitterDjango"/></a>
 	</div>
+
+	<div id="menu">
+
+	</div>
+
+	<div id="body">
+		<div id="left">		
+				
+		</div>
+
+		<div id="content">
+			<big>
+				<a href="{% url log_in %}">Log In</a>
+				<br>
+				<a href="{% url sign_up %}">Sign Up</a>
+				<br>
+				<a href="{% url django.contrib.auth.views.password_reset %}">Forgot your password? </a>
+			</big>
+		</div>
+
+		<div id="right">
+			
+		</div>
+	</div>
+		
 
 </body>
 </html>

@@ -1,12 +1,39 @@
 <html>
 <head>
-	<title></title>
+	<title>Edit Profile</title>
+	<link rel ="stylesheet" type="text/css" href="{{STATIC_URL}}style.css">
 </head>
 <body>
-	<form method="POST" enctype="multipart/form-data" action=''> 
-	    {% csrf_token %}
-	    {{ form.as_p }}
-	    <input type="submit"/>
-	</form>
+	<div id="header">
+		<a href="{% url home %}"><img src="{{MEDIA_URL}}HeadShots/logo.png" width="125" height="100" alt="TwitterDjango"/></a>
+	</div>
+
+	<div id="menu">		
+		<a href="{% url edit_profile %}">
+			<img src="{{MEDIA_URL}}HeadShots/profiler.jpg" width="40" height="40" alt="EditProfile"/>
+		</a>
+		<a href="{% url time_line %}">
+			<img src="{{MEDIA_URL}}HeadShots/timeliner.jpg" width="40" height="40" alt="TimeLine"/>
+		</a>	
+		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
+	</div>
+
+	<div id="body">
+		<div id="left">		
+				
+		</div>
+
+		<div id="content">
+			<form method="POST" enctype="multipart/form-data" action=''> 
+			    {% csrf_token %}
+			    {{ form.as_p }}
+			    <input type="submit"/>
+			</form>
+		</div>
+
+		<div id="right">
+			
+		</div>
+	</div>
 </body>
 </html>

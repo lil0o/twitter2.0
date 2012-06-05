@@ -4,33 +4,58 @@
 	<link rel ="stylesheet" type="text/css" href="{{STATIC_URL}}style.css">
 </head>
 <body>
-	<div>
-		<br>
-		<img id="shot" src="{{ MEDIA_URL }}{{ profile.head_shot }}"/>
-		<br>
-		<big>@ {{ profile.user.username }}</big>
-		<br>
-				
-		<br>
-		<a href="{% url follow profile.pk %}">{{ action }}</a>
-		<br>
-		<small>{{ profile.biography }}</small>
-		<br>
-		<small>{{ profile.location }}</small>
+	<div id="header">
+		<a href="{% url home %}"><img src="{{MEDIA_URL}}HeadShots/logo.png" width="125" height="100" alt="TwitterDjango"/></a>
 	</div>
 
-	<div>
-		{% if public == "false" %}
-			<big> This profile is not public</big>
-  		{% endif %}
-		{% if public == "true" %}
-			{% for tweet in tweet %}
-				{{ tweet.owner }} <small>{{ tweet.creation_date }}</small>
-				<br>
-				{{ tweet.status }}
-				<br>
-			{% endfor %}	
-  		{% endif %}
+	<div id="menu">
+		<a href="{% url edit_profile %}">
+			<img src="{{MEDIA_URL}}HeadShots/profiler.jpg" width="40" height="40" alt="EditProfile"/>
+		</a>
+		<a href="{% url time_line %}">
+			<img src="{{MEDIA_URL}}HeadShots/timeliner.jpg" width="40" height="40" alt="TimeLine"/>
+		</a>	
+		<a href="{% url django.contrib.auth.views.logout %}">Log Out</a>
 	</div>
+
+	<div id="body">
+		<div id="left">		
+			<br>
+			<img id="shot" src="{{ MEDIA_URL }}{{ profile.head_shot }}"/>
+			<br>
+			<big>@ {{ profile.user.username }}</big>
+			<br>
+					
+			<br>
+			<a href="{% url follow profile.pk %}">{{ action }}</a>
+			<br>
+			<small>{{ profile.biography }}</small>
+			<br>
+			<small>{{ profile.location }}</small>		
+		</div>
+
+		<div id="content">
+			.::{{ profile.user.username }}'s Tweets::.
+			<br>
+			<br>
+			{% if public == "false" %}
+				<big> This profile is not public</big>
+	  		{% endif %}
+			{% if public == "true" %}
+				{% for tweet in tweet %}
+					<img id="minishot" src="{{ MEDIA_URL }}{{ profile.head_shot }}"/>
+					@ {{ tweet.owner }} <small>{{ tweet.creation_date }}</small>
+					<br>
+					{{ tweet.status }}
+					<br>
+				{% endfor %}	
+	  		{% endif %}	
+		</div>
+
+		<div id="right">
+			
+		</div>
+	</div>
+
 </body>
 </html>
