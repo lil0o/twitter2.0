@@ -1,7 +1,6 @@
 <html>
 <head>
-	<title>Home</title>
-	
+	<title>Home</title>	
 	<link rel ="stylesheet" type="text/css" href="{{STATIC_URL}}style.css">	
 </head>
 <body>
@@ -20,7 +19,7 @@
 	<div>		
 		<big>@ {{ profile.user.username }}</big>
 		<br>
-		<img id="headShot" src="{{ MEDIA_URL }}{{ profile.head_shot }}"/>
+		<img id="shot" src="{{ MEDIA_URL }}{{ profile.head_shot }}"/>
 		<br>
 		<small>{{ profile.location }}</small>	
 		<br>
@@ -50,6 +49,8 @@
 	<div>
 		{% for users in users %}
 		<div>
+			<br>
+			<img id="minishot" src="{{ MEDIA_URL }}{{ users.head_shot }}"/>
 			<br>			
 			<a href="{% url visit_profile users.pk %}">{{ users.user }}</a>		
 		</div>

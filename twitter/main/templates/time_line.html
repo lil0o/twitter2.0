@@ -1,16 +1,22 @@
 <html>
 <head>
 	<title>Time Line</title>
+	<link rel ="stylesheet" type="text/css" href="{{STATIC_URL}}style.css">
 </head>
 <body>
-	{% for tweet in tweet %}
 	<div>
-		@{{ tweet.owner }}{{ tweet.creation_date }}		
-		<br>
-		{{ tweet.status }}		
-		<br>	
-	</div>
+	{% for tweet in tweet %}
+			<div>
+				<br>
+					<img id="minishot" src="{{ MEDIA_URL }}{{ tweet.owner.head_shot }}"/>
+				<br>
+				<br>
+				@{{ tweet.owner }}<small>{{ tweet.creation_date }}</small>		
+				<br>
+				{{ tweet.status }}		
+				<br>	
+			</div>
 	{% endfor %}
-
+	</div>
 </body>
 </html>

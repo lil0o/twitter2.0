@@ -68,19 +68,16 @@ def home(request):
 
 @login_required
 def edit_profile(request):
+    perfil = get_object_or_404(Profile, user=request.user)
+    form = Edit_ProfileForm(instance=perfil)
     if request.method == 'POST':
-        form = Edit_ProfileForm(request.POST, instance=Profile.objects.get(user=request.user))
+        form = Edit_ProfileForm(request.POST, request.FILES, instance=perfil)
         if form.is_valid():
             form.save()
             return redirect('home')
-        else:
-            return render_to_response('sign_up.html', {
-                'form': form, },
-                RequestContext(request))
-    form = Edit_ProfileForm(instance=Profile.objects.get(user=request.user))
     return render_to_response('edit_profile.html', {
-        'form': form, },
-        RequestContext(request))
+        'form': form,
+        }, RequestContext(request))
 
 
 @login_required
@@ -155,9 +152,9 @@ def visit_profile(request, pk):
 
 @login_required
 def time_line(request):
-    profile = request.user.get_profile()
-    following = profile.follow.all()
-    tweet = Tweet.objects.filter(owner__id__in=following)
+    follower = request.user.get_profile()
+    follows = follower.follow.all()
+    tweet = Tweet.objects.filter(owner__id__in=follows)
     return render_to_response('time_line.html', {
-        'tweet': tweet},
+        'tweet': tweet, },
         RequestContext(request))

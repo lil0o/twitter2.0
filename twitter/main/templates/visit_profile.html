@@ -1,9 +1,13 @@
 <html>
 <head>
 	<title>Profile</title>
+	<link rel ="stylesheet" type="text/css" href="{{STATIC_URL}}style.css">
 </head>
 <body>
 	<div>
+		<br>
+		<img id="shot" src="{{ MEDIA_URL }}{{ profile.head_shot }}"/>
+		<br>
 		<big>@ {{ profile.user.username }}</big>
 		<br>
 				

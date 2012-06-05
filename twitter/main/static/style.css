@@ -1,3 +1,7 @@
-#headShot {
+#shot {
 	width: 160px; height:160px;
+}
+
+#minishot {
+	width: 60px; height:60px;
 }
